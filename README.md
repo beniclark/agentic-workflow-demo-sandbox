@@ -25,8 +25,8 @@ Paired with the deck and source demos at
 
 Prereqs:
 - `gh extension install github/gh-aw` (once per machine)
-- Copilot coding agent enabled on the repo (for `triage` and `docs-sync`)
-- `gh secret set ANTHROPIC_API_KEY` (for `simplify` only)
+- `gh secret set COPILOT_GITHUB_TOKEN` on this repo — a PAT from a Copilot-enabled account (required by the `copilot` engine in `triage.md` and `docs-sync.md`). Note: this is NOT the same as the "Copilot coding agent" toggle in repo settings.
+- `gh secret set ANTHROPIC_API_KEY` on this repo (required by the `claude` engine in `simplify.md`)
 
 ```bash
 # Compile the .md workflows into .lock.yml files that Actions executes.
