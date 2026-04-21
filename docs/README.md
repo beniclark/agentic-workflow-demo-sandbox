@@ -17,12 +17,12 @@ npm install @example/demo-api
 ```js
 const { createUser } = require("@example/demo-api");
 
-// OLD (pre-v1) signature — the one in src/api.js no longer matches this.
-const user = await createUser("Ada Lovelace", "ada@example.com");
+const user = await createUser({ name: "Ada Lovelace", email: "ada@example.com" });
 console.log(user.id, user.email);
 ```
 
-`createUser(name, email)` returns a `{ id, email }` pair.
+`createUser(payload)` accepts a `{ name, email, role? }` object and returns a
+`{ id, name, email, role, createdAt }` object.
 
 ### Look up a user
 
@@ -36,7 +36,7 @@ const user = await getUser("abc123");
 
 | Function | Signature | Returns |
 |----------|-----------|---------|
-| `createUser` | `createUser(name, email)` | `{ id, email }` |
+| `createUser` | `createUser(payload)` | `{ id, name, email, role, createdAt }` |
 | `getUser`    | `getUser(id)`             | `user \| null` |
 
 ## Changelog
