@@ -5,16 +5,16 @@
 
 /**
  * Create a new user.
- * @param {{ fullName: string, emailAddress: string, role?: "admin" | "member" }} payload
- * @returns {Promise<{ id: string, fullName: string, emailAddress: string, role: string, createdAt: string }>}
+ * @param {{ name: string, email: string, role?: "admin" | "member" }} payload
+ * @returns {Promise<{ id: string, name: string, email: string, role: string, createdAt: string }>}
  */
 async function createUser(payload) {
-  if (!payload || typeof payload !== "object") {
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
     throw new TypeError("createUser(payload): payload object is required");
   }
-  const { fullName, emailAddress, role = "member" } = payload;
-  if (!fullName || !emailAddress) {
-    throw new TypeError("createUser(payload): fullName and emailAddress are required");
+  const { name, email, role = "member" } = payload;
+  if (typeof name !== "string" || !name || typeof email !== "string" || !email) {
+    throw new TypeError("createUser(payload): name and email are required strings");
   }
   return {
     id: cryptoRandomId(),
