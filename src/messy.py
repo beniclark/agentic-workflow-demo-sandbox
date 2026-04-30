@@ -2,55 +2,30 @@
 
 
 def flatten(lists):
-    result = []
-    for sublist in lists:
-        for item in sublist:
-            result.append(item)
-    return result
+    return [item for sublist in lists for item in sublist]
 
 
 def is_positive(n):
-    if n > 0:
-        return True
-    else:
-        return False
+    return n > 0
 
 
 def classify(record):
-    if record is not None:
-        if "status" in record:
-            if record["status"] == "active":
-                if record.get("score", 0) > 50:
-                    return "premium"
-                else:
-                    return "standard"
-            else:
-                return "inactive"
-        else:
-            return "unknown"
-    else:
+    if record is None:
         return "missing"
+    if "status" not in record:
+        return "unknown"
+    if record["status"] != "active":
+        return "inactive"
+    return "premium" if record.get("score", 0) > 50 else "standard"
 
 
 def validate_any(thing, required_keys):
-    if thing is not None:
-        if isinstance(thing, dict) == True:
-            for k in required_keys:
-                if k in thing:
-                    if thing[k] is not None:
-                        if thing[k] != "":
-                            pass
-                        else:
-                            return False
-                    else:
-                        return False
-                else:
-                    return False
-            return True
-        else:
-            return False
-    else:
+    if thing is None or not isinstance(thing, dict):
         return False
+    for k in required_keys:
+        if k not in thing or thing[k] is None or thing[k] == "":
+            return False
+    return True
 
 
 def safe_divide(a, b):
