@@ -2,34 +2,21 @@
 
 
 def flatten(lists):
-    result = []
-    for sublist in lists:
-        for item in sublist:
-            result.append(item)
-    return result
+    return [item for sublist in lists for item in sublist]
 
 
 def is_positive(n):
-    if n > 0:
-        return True
-    else:
-        return False
+    return n > 0
 
 
 def classify(record):
-    if record is not None:
-        if "status" in record:
-            if record["status"] == "active":
-                if record.get("score", 0) > 50:
-                    return "premium"
-                else:
-                    return "standard"
-            else:
-                return "inactive"
-        else:
-            return "unknown"
-    else:
+    if record is None:
         return "missing"
+    if "status" not in record:
+        return "unknown"
+    if record["status"] != "active":
+        return "inactive"
+    return "premium" if record.get("score", 0) > 50 else "standard"
 
 
 def validate_any(thing, required_keys):
@@ -55,9 +42,6 @@ def validate_any(thing, required_keys):
 
 def safe_divide(a, b):
     try:
-        try:
-            return a / b
-        except ZeroDivisionError:
-            return None
+        return a / b
     except Exception:
         return None
